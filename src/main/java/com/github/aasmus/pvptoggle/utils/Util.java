@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.aasmus.pvptoggle.PvPToggle;
-import com.nametagedit.plugin.NametagEdit;
+import org.bukkit.plugin.Plugin;
 
 public class Util {
 	
@@ -64,11 +64,15 @@ public class Util {
 	}
 	
 	public static boolean getCooldown(Player p) {
+		if (PvPToggle.instance.getConfig().getInt("SETTINGS.COOLDOWN") <= 0 || p.hasPermission("pvptoggle.bypass")) {
+			removeCooldownTime(p);
+			return false;
+		}
 		if(PvPToggle.instance.cooldowns.containsKey(p.getUniqueId())) {
 			Date lastChange = PvPToggle.instance.cooldowns.get(p.getUniqueId());
 			Date currentTime = new Date();
 			int seconds = (int) (currentTime.getTime() - lastChange.getTime())/1000;
-			if(seconds > PvPToggle.instance.getConfig().getInt("SETTINGS.COOLDOWN") || p.hasPermission("pvptoggle.bypass")) {
+			if(seconds >= PvPToggle.instance.getConfig().getInt("SETTINGS.COOLDOWN")) {
 				Util.removeCooldownTime(p);
 				return false;
 			} else {
@@ -81,12 +85,20 @@ public class Util {
 	}
 	
 	public static void ChangeNametag(Player p, String color) {
-		if(PvPToggle.instance.getServer().getPluginManager().isPluginEnabled("NametagEdit")) {
-			if(color == "reset") {
-				NametagEdit.getApi().clearNametag(p);
+		Plugin nametagEdit = PvPToggle.instance.getServer().getPluginManager().getPlugin("NametagEdit");
+		if (nametagEdit == null || !nametagEdit.isEnabled()) return;
+		// Resolve this optional API only when installed. Its old Maven repository is unavailable.
+		try {
+			Object api = nametagEdit.getClass().getMethod("getApi").invoke(null);
+			Class<?> apiType = Class.forName("com.nametagedit.plugin.api.INametagApi", true,
+					nametagEdit.getClass().getClassLoader());
+			if ("reset".equals(color)) {
+				apiType.getMethod("clearNametag", Player.class).invoke(api, p);
 			} else {
-				NametagEdit.getApi().setPrefix(p, color);
-			}	
+				apiType.getMethod("setPrefix", Player.class, String.class).invoke(api, p, color);
+			}
+		} catch (ReflectiveOperationException | LinkageError exception) {
+			PvPToggle.instance.getLogger().warning("Could not update NametagEdit nametag: " + exception);
 		}
 	}
 	
@@ -95,7 +107,7 @@ public class Util {
 
 			@Override
 			public void run() {			
-				if(!p.isOnline() || PvPToggle.instance.players.get(p.getUniqueId()) != false) {
+				if(!p.isOnline() || !Boolean.FALSE.equals(PvPToggle.instance.players.get(p.getUniqueId()))) {
 					this.cancel();
 				} else if(!p.isDead()) {
 					double angle = 0;
@@ -107,7 +119,7 @@ public class Util {
 						double x = (radius * Math.sin(angle));
 						double z = (radius * Math.cos(angle));
 						angle += 0.251;
-						p.getWorld().spawnParticle(Particle.REDSTONE, location.getX()+x, location.getY(), location.getZ()+z, 0, 0, 1, 0, dustOptions);
+						p.getWorld().spawnParticle(Particle.DUST, location.getX()+x, location.getY(), location.getZ()+z, 0, 0, 1, 0, dustOptions);
 					}
 				}
 				

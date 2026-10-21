@@ -1,16 +1,14 @@
 main: com.github.aasmus.pvptoggle.PvPToggle
 softdepend: [PlaceholderAPI, NametagEdit]
 name: PvPToggle
-version: 1.7
-api-version: 1.13
+version: '${project.version}'
+api-version: '1.20.5'
 author: aasmus (with modifications by the Red Fusion Team)
 description: Plugin that allows players to toggle PvP state
 commands:
   pvp:
     description: used to change PvP state.
     usage: /pvp
-    permission: pvptoggle.allow
-    permission-message: You don't have the pvptoggle.allow permission node.
 permissions:
   pvptoggle.allow:
     description: allows player to change pvp state
