@@ -1,0 +1,37 @@
+SETTINGS:
+##是否保存玩家的 PvP 状态，并在下次登录时恢复
+  PERSISTENT_PVP_STATE: false
+##开启 PvP 或参与玩家战斗后，关闭 PvP 前需要等待的秒数；0 表示无冷却
+  COOLDOWN: 0
+##true 表示默认关闭 PvP；false 表示默认开启 PvP。
+  DEFAULT_PVP_OFF: true
+##显示 PvP 开启时的粒子效果
+  PARTICLES: true
+##PvP 开启时通过 NametagEdit 显示红色名称前缀
+  NAMETAG: false
+##禁止切换 PvP 状态的世界（这些世界始终使用各自的设置）
+  BLOCKED_WORLDS: []
+##<pvpstate> 用于表示玩家当前的 PvP 状态
+##<parameter> 用于表示玩家名称或其他参数
+MESSAGES:
+  HELP_HEADER: '&a&l命令：'
+  HELP_GENERAL_USEAGE: '&a使用 /pvp {toggle|on|off|status} 更改或查看 PvP 状态。'
+  HELP_VIEW_OTHERS: '&a使用 /pvp <player> 查看其他玩家的 PvP 状态。'
+  HELP_SET_OTHERS: '&a使用 /pvp {toggle|on|off} <player> 设置其他玩家的 PvP 状态。'
+  NO_PLAYER: '&c找不到名为 <parameter> 的玩家'
+  COMMAND_INVALID_PARAMETER: '&c<parameter> 不是有效参数。可用参数：{toggle|on|off|status}'
+  COMMAND_NO_PERMISSION: '&c你没有权限使用此命令。'
+  PVP_STATE_ENABLED: '&a你的 PvP 已开启！'
+  PVP_STATE_DISABLED: '&a你的 PvP 已关闭！'
+  PVP_STATE_CHANGED_OTHERS: '&a<parameter> 的 PvP 状态已更改为 <pvpstate>'
+  PVP_STATUS: '&a你的 PvP 状态为 <pvpstate>'
+  PVP_STATUS_OTHERS: '&a<parameter> 的 PvP 状态为 <pvpstate>'
+  PVP_DISABLED: '&c你的 PvP 已关闭！'
+  PVP_DISABLED_OTHERS: '&c<parameter> 的 PvP 已关闭！'
+  PVP_COOLDOWN: '&c操作太快！你还需等待 <parameter> 秒才能关闭 PvP。'
+  PVP_WORLD_CHANGE_DISABLED: '&a由于进入的世界不允许 PvP，你的 PvP 已关闭。'
+  PVP_WORLD_CHANGE_REQUIRED: '&a由于进入的世界要求开启 PvP，你的 PvP 已开启。'
+  PVP_WORLD_CANNOT_CHANGE_SELF: '&c你无法在此世界更改 PvP 状态。'
+  PVP_WORLD_CANNOT_CHANGE_OTHERS: '&c你无法在那个世界更改 PvP 状态。'
+  PVP_STATE_ON: '开启'
+  PVP_STATE_OFF: '关闭'

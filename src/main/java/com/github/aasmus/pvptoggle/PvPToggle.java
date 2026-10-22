@@ -39,6 +39,7 @@ public class PvPToggle extends JavaPlugin implements Listener {
 		
 		File PVPData = new File(getDataFolder(), "Data");
 		dataUtils = new PersistentData(PVPData);
+		blockedWorlds = config.getStringList("SETTINGS.BLOCKED_WORLDS");
 		
 		//register events
 		getServer().getPluginManager().registerEvents(this, this);
@@ -49,9 +50,7 @@ public class PvPToggle extends JavaPlugin implements Listener {
 		//register command
 		this.getCommand("pvp").setExecutor(new PvPCommand());
 		
-		blockedWorlds = config.getStringList("SETTINGS.BLOCKED_WORLDS");
-		
-		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+		if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			new PlaceholderAPIHook(this).register();
 		}		
 	}

@@ -18,9 +18,9 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 	public String onPlaceholderRequest(Player player, String identifier) {
 		if(player == null) { return ""; }
 		
-		//Placeholder: %pvptoggle_positive_rep%
+		//Placeholder: %pvptoggle_pvp_state%
 		if(identifier.equals("pvp_state")) {
-			return PvPToggle.instance.players.get(player.getUniqueId()) ? "&aOff" : "&cOn";
+			return Util.getPlayerState(player.getUniqueId()) ? "&aOff" : "&cOn";
 		}
 		
 		return null;

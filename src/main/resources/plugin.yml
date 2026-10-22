@@ -1,0 +1,27 @@
+main: com.github.aasmus.pvptoggle.PvPToggle
+softdepend: [PlaceholderAPI, NametagEdit]
+name: PvPToggle
+version: '${project.version}'
+api-version: '1.20.5'
+author: aasmus (with modifications by the Red Fusion Team)
+description: 允许玩家切换 PvP 状态
+commands:
+  pvp:
+    description: 查看或切换 PvP 状态
+    usage: /pvp
+permissions:
+  pvptoggle.allow:
+    description: 允许玩家查看或切换自己的 PvP 状态
+    default: true
+  pvptoggle.others:
+    description: 允许查看其他玩家的 PvP 状态
+    default: op
+  pvptoggle.others.set:
+    description: 允许设置其他玩家的 PvP 状态
+    default: op
+  pvptoggle.bypass:
+    description: 允许跳过 PvP 冷却时间
+    default: op
+  pvptoggle.reload:
+    description: 允许重载插件配置
+    default: op
