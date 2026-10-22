@@ -4,24 +4,24 @@ name: PvPToggle
 version: '${project.version}'
 api-version: '1.20.5'
 author: aasmus (with modifications by the Red Fusion Team)
-description: Plugin that allows players to toggle PvP state
+description: 允许玩家切换 PvP 状态
 commands:
   pvp:
-    description: used to change PvP state.
+    description: 查看或切换 PvP 状态
     usage: /pvp
 permissions:
   pvptoggle.allow:
-    description: allows player to change pvp state
+    description: 允许玩家查看或切换自己的 PvP 状态
     default: true
   pvptoggle.others:
-    description: allows player to see other player's pvp state
+    description: 允许查看其他玩家的 PvP 状态
     default: op
   pvptoggle.others.set:
-    description: allows player to set other players pvp state
+    description: 允许设置其他玩家的 PvP 状态
     default: op
   pvptoggle.bypass:
-    description: allows player to bypass cooldown
+    description: 允许跳过 PvP 冷却时间
     default: op
   pvptoggle.reload:
-    description: allows player to reload config
+    description: 允许重载插件配置
     default: op

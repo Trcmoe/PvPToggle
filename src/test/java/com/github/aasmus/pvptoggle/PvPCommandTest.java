@@ -44,7 +44,7 @@ class PvPCommandTest {
         plugin.cooldowns = new HashMap<>();
         PvPToggle.blockedWorlds = List.of();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(
-                getClass().getResourceAsStream("/config.yml"), StandardCharsets.UTF_8));
+                getClass().getResourceAsStream("/config-legacy.yml"), StandardCharsets.UTF_8));
         config.set("SETTINGS.PARTICLES", false);
         config.set("SETTINGS.NAMETAG", false);
         config.set("SETTINGS.COOLDOWN", 30);
@@ -271,5 +271,19 @@ class PvPCommandTest {
         plugin.config.set("MESSAGES.EMPTY", "");
         Chat.send(console, "EMPTY");
         verifyNoMoreInteractions(console);
+    }
+
+    @Test
+    void chineseDefaultsRenderStateAndPlayerParameters() {
+        YamlConfiguration chinese = YamlConfiguration.loadConfiguration(new InputStreamReader(
+                getClass().getResourceAsStream("/config.yml"), StandardCharsets.UTF_8));
+        when(plugin.getConfig()).thenReturn(chinese);
+        ConsoleCommandSender console = mock(ConsoleCommandSender.class);
+        Chat.send(console, "PVP_STATUS", null, false);
+        Chat.send(console, "PVP_STATUS", null, true);
+        Chat.send(console, "PVP_STATUS_OTHERS", "$1\\玩家", false);
+        verify(console, times(2)).sendMessage(contains("开启"));
+        verify(console).sendMessage(contains("关闭"));
+        verify(console).sendMessage(contains("$1\\玩家"));
     }
 }

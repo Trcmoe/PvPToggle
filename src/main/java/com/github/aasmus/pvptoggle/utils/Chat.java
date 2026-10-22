@@ -19,7 +19,11 @@ public class Chat {
         String msg = PvPToggle.instance.getConfig().getString("MESSAGES." + message);
         if (msg == null || msg.isEmpty()) return;
         String output = msg.replace("<parameter>", parameter == null ? "" : parameter);
-        if (pvpState != null) output = output.replace("<pvpstate>", pvpState ? "off" : "on");
+        if (pvpState != null) {
+            String key = pvpState ? "PVP_STATE_OFF" : "PVP_STATE_ON";
+            String state = PvPToggle.instance.getConfig().getString("MESSAGES." + key, pvpState ? "off" : "on");
+            output = output.replace("<pvpstate>", state);
+        }
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', output));
     }
 }
